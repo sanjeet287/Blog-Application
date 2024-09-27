@@ -26,6 +26,18 @@ public class GlobalExceptionHandler {
 		
 	}
 	
+
+	@ExceptionHandler(AuthApiException.class)
+	public ResponseEntity<APIResponse> AuthApiExceptionHandler(AuthApiException ex){
+		
+		String message=ex.getMessage();
+		
+		APIResponse apiResponse=new APIResponse(message,true);
+		
+		return new ResponseEntity<APIResponse>(apiResponse,HttpStatus.BAD_REQUEST);	
+		
+	}
+	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<String,String>> methodArgsNotValidException(MethodArgumentNotValidException ex){
 		 

@@ -2,6 +2,7 @@ package com.blog_app.services;
 
 import java.util.List;
 
+import com.blog_app.exceptions.responses.PostResponse;
 import com.blog_app.payloads.PostDto;
 
 public interface PostService {
@@ -12,15 +13,15 @@ public interface PostService {
 	
 	PostDto getPost(Integer id);
 	
-	List<PostDto> getAllPost();
+	PostResponse getAllPost(String sortBy);
 	
 	void deletePost(Integer id);
 	
-	List<PostDto> getPostsByCategory(Integer categoryid);
+	List<PostDto> getPostsByCategory(Integer categoryid,Integer pageNumber,Integer pageSize,String sortBy,String sortDir);
 	
-	List<PostDto> getPostsByUser(Integer userid);
+	List<PostDto> getPostsByUser(Integer userid,Integer pageNumber,Integer pageSize,String sortBy,String sortDir);
 	
-	List<PostDto> searchPosts(String keyword);
+	List<PostDto> findByTitle(String keyword);
 	
 	
 

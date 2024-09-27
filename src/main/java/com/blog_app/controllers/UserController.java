@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blog_app.exceptions.responses.APIResponse;
 import com.blog_app.payloads.UserDto;
 import com.blog_app.services.UserService;
 
@@ -41,13 +44,16 @@ public class UserController {
 	}
 
 	// Delete delete user
+	//only admin can delete
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/delete/{userid}")
-	public void deleteUser(@PathVariable("userid") Integer id) {
+	public ResponseEntity<APIResponse> deleteUser(@PathVariable("userid") Integer id) {
 		this.userService.deleteUser(id);
+		return new ResponseEntity<APIResponse>((HttpStatusCode) new APIResponse("User deleted successfully!!",true));
 	}
 
 	// GET fetch all users
-	@GetMapping("/")
+	@GetMapping("/allusers")
 	public ResponseEntity<List<UserDto>> getAllUser() {
 		List<UserDto> allUsers = this.userService.getAllUsers();
 		return new ResponseEntity<>(allUsers, HttpStatus.OK);

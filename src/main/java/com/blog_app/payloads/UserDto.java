@@ -1,5 +1,10 @@
 package com.blog_app.payloads;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.blog_app.entities.Role;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +18,7 @@ import lombok.Setter;
 @Getter
 public class UserDto {
 
-		
+		private Integer id;
 	@NotNull
 	@Size(min = 3,max=40,message="length should not be less than 3 chars !! ")
 	private String name;
@@ -28,5 +33,5 @@ public class UserDto {
 	@NotEmpty
 	private String about;
 	
-	
+	private Set<Role> roles=new HashSet<>();
 }
